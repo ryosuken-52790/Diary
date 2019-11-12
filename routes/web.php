@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// 消した
+Route::get('/', 'DiaryController@index');
+
+// php artisan serve
