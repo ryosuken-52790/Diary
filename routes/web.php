@@ -12,6 +12,14 @@
 */
 
 // 消した
-Route::get('/', 'DiaryController@index');
+Route::get('/', 'DiaryController@index')->name('diary.index');
+// Route::post('/', 'DiaryController@create');
+// このURLがきたとき、これを表示しますよ〜。
+Route::get('/diary/create', 'DiaryController@create')->name('diary.create');
+Route::post('/diary/store', 'DiaryController@store')->name('diary.store');
+// ->name('diary.store')のところは好きな名前を入れていい。
+// Route::post('/diary/store', 'DiaryController@store')はURLを指す。
+
+
 
 // php artisan serve
