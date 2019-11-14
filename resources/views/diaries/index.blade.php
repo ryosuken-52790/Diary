@@ -18,6 +18,15 @@
       <p>{{$diary->title}}</p>
       <p>{{$diary->body}}</p>
       <p>{{$diary->created_at}}</p>
+
+      <form action="{{ route('diary.destroy', ['id' => $diary->id ]) }}" method="POST" class="d-inline">
+      <!-- $diary->idを入れたことで検証のとこにDBのidが表示される。 -->
+      @csrf
+      @method('delete')
+        <button class="btn btn-danger">削除</button>
+      </form>
+
+
     </div>
  @endforeach
  <!-- 青く表示されるのは勝手にjsを読み込むから。 -->
