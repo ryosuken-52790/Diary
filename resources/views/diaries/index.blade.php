@@ -15,6 +15,16 @@
       <p>{{$diary->body}}</p>
       <p>{{$diary->created_at}}</p>
 
+
+
+    <a href="{{ route('diary.edit',['id' => $diary->id ]) }}" class="btn btn-success">編集</a>
+      {{-- 編集ボタンを作る --}}
+      {{-- idを埋めなきゃいけない
+      , で繋いでidの場所を指定。 --}}
+
+
+
+      {{-- 下は削除ボタンをつくってる --}}
       <form action="{{ route('diary.destroy', ['id' => $diary->id ]) }}" method="POST" class="d-inline">
       <!-- $diary->idを入れたことで検証のとこにDBのidが表示される。 -->
       @csrf
