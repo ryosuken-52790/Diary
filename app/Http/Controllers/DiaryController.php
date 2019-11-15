@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Diary;
 // use App\Diary;が抜けてた・・・・
 
+
 // 上はDiaryモデルの宣言
 // CreateDiaryを使用する宣言
 use App\Http\Requests\CreateDiary;
@@ -41,10 +42,9 @@ class DiaryController extends Controller
         return view('diaries.create');
     }
 
-
+    // storeメソッド
     // 新しい日記の保存をする画面
     // 投稿が押されると、ここへ飛んでくるよ！
-
     public function store(CreateDiary $request)
     {
         //Diaryモデルのインスタンスを作成
@@ -68,6 +68,8 @@ class DiaryController extends Controller
 
     }
 
+
+    // destroyメソッド
     // 日記を削除するためのメソッド
     public function destroy(int $id)
     {
@@ -84,6 +86,50 @@ class DiaryController extends Controller
         $diary->delete();
 
         // 一覧画面にリダイレクト
+        return redirect()->route('diary.index');
+
+
+    }
+
+
+    // editメソッド
+    // 編集画面を表示する
+    public function edit(int $id)
+    {
+        // 受け取ったIDを元に日記を取得。
+        $diary = Diary::find($id);
+
+        return view('diaries.edit',[
+            'diary'=> $diary
+        ]);
+        // 編集画面を返す。同時に画面に取得した日記を渡す
+        // これは表示するためのもので
+        // それらはresourcesのviewsに入れるのが鉄則。
+        // diariesの。。。に入ってるから、この書き方！
+
+    }
+
+    // 日記を更新し、一覧画面をリダイレクトする
+    // -$id : 編集対象の日記のID
+    // -$request : リクエストの内容、ここに画面で入力された文字が格納されている。
+    public function update(int $id, CreateDiary $request)
+    {
+        // dd($request->title);
+        // この段階で編集に飛んでから、「投稿」を押すと、タイトルをリクエストしてるからそれが画面の一番上に黒い棒状の所に表示される。
+
+        // 受け取ったIDを元に日記を取得
+        $diary = Diary::find($id);
+
+        // ヒントはstoreメソッド！
+        // 取得した日記のタイトル、本文を書き換える
+        $diary->title = $request->title;
+        // 更新したい日記の。。。requestでもらってきたものを代入
+        $diary->body = $request->body;
+
+        // DBに保存
+        $diary->save();
+
+        // 一覧ページにリダイレクト
         return redirect()->route('diary.index');
 
 
