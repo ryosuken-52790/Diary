@@ -12,6 +12,13 @@ use App\Diary;
 use App\Http\Requests\CreateDiary;
 
 
+// ログイン情報を管理する
+use Illuminate\Support\Facades\Auth;
+
+
+
+
+
 class DiaryController extends Controller
 {
     //一覧画面を表示するためのメソッド
@@ -42,6 +49,8 @@ class DiaryController extends Controller
         return view('diaries.create');
     }
 
+
+
     // storeメソッド
     // 新しい日記の保存をする画面
     // 投稿が押されると、ここへ飛んでくるよ！
@@ -57,16 +66,26 @@ class DiaryController extends Controller
         // $diary->カラム名 = カラムに設定したい値
         $diary->title = $request->title;
         $diary->body = $request->body;
+        $diary->user_id = Auth::user()->id;
+        // dd(Auth::user());
+        // // これを書くだけで、情報を取ってくる。ユーザーの
+
+        
+        // これでDBのtitle,body,user_idに Auth~ のユーザー情報を入れますよ。になる！！！
+
+
 
         // DBに保存実行
         $diary->save();
-        
+
 
         // 一覧ページにリダイレクト
         // これをやると二重投稿を防ぐことができる。
         return redirect()->route('diary.index');
 
     }
+
+
 
 
     // destroyメソッド
