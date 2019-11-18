@@ -1,5 +1,12 @@
 <!-- layout.blade.phpを読み込む。 -->
-@extends('layout')
+@extends('layouts.app')
+
+      {{-- layoutからlayouts.appに変えたことで、
+            一番上にLaravelのログインのが表示される --}}
+
+            {{-- resourcesのviews,layoutsができて、 その中のapp.blade.jpが--}}
+
+
 
 @section('title','一覧')
 

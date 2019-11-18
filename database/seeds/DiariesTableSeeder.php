@@ -15,7 +15,7 @@ class DiariesTableSeeder extends Seeder
     public function run()
     {
         //こーゆうサンプルを・・・
-        // 配列でサンプルデータを作っておく
+        //配列でサンプルデータを作っておく
         $diaries = [
             [
                 'title' => '初めてのLaravel',
@@ -31,6 +31,9 @@ class DiariesTableSeeder extends Seeder
             ],
         ];
 
+        // IDが一番若いユーザーを取得
+        $user = DB::table('users')->first();
+
         // 配列をループで回して、テーブルにINSERTする
         foreach ($diaries as $diary) {
 
@@ -39,9 +42,12 @@ class DiariesTableSeeder extends Seeder
                 'body' => $diary['body'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                // 追加。
+                'user_id' => $user->id,
+
+                // => Carbon::now(),は現在時刻をくれる。
             ]);
         }
     }
 }
 
-// => Carbon::now(),は現在時刻をくれる。
