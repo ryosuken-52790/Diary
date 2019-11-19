@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
+// 新規アカウント作成に関わるコントローラー
 {
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +29,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+    // ここの設定が、どこに飛ぶかログイン後
 
     /**
      * Create a new controller instance.
