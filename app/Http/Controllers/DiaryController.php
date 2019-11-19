@@ -69,8 +69,6 @@ class DiaryController extends Controller
         $diary->user_id = Auth::user()->id;
         // dd(Auth::user());
         // // これを書くだけで、情報を取ってくる。ユーザーの
-
-        
         // これでDBのtitle,body,user_idに Auth~ のユーザー情報を入れますよ。になる！！！
 
 
@@ -94,12 +92,14 @@ class DiaryController extends Controller
     {
         // dd($id);
         // これを使った時に「削除」を押すと、id番号が表示された。
-
-
-
         // Diaryモデルを使用して、IDが一致する日記を取得
         // id ○番の日記を取ってくる。
         $diary = Diary::find($id);
+
+        if(Auth::user()->id != $diary->user_id) 
+        {
+            abort(403);
+        }
 
         // 取得した日記の確認
         $diary->delete();
@@ -111,12 +111,21 @@ class DiaryController extends Controller
     }
 
 
+
     // editメソッド
     // 編集画面を表示する
-    public function edit(int $id)
+    public function edit(Diary $diary)
     {
+        // ログインyユーザーが日記の投稿者かチェックする
+        if(Auth::user()->id != $diary->user_id) 
+        {
+            abort(403);
+        }
+        // ここに書くことでreturnを返す前にチェックしますよ。の意
+
+
         // 受け取ったIDを元に日記を取得。
-        $diary = Diary::find($id);
+        // $diary = Diary::find($id);
 
         return view('diaries.edit',[
             'diary'=> $diary
@@ -128,6 +137,8 @@ class DiaryController extends Controller
 
     }
 
+
+
     // 日記を更新し、一覧画面をリダイレクトする
     // -$id : 編集対象の日記のID
     // -$request : リクエストの内容、ここに画面で入力された文字が格納されている。
@@ -138,6 +149,12 @@ class DiaryController extends Controller
 
         // 受け取ったIDを元に日記を取得
         $diary = Diary::find($id);
+
+        if(Auth::user()->id != $diary->user_id) 
+        {
+        //  投稿者とログインユーザーが違う場合
+            abort(403);
+        }
 
         // ヒントはstoreメソッド！
         // 取得した日記のタイトル、本文を書き換える

@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth']], function (){
                 // Route::post('/diary/store', 'DiaryController@store')はURLを指す。
     Route::delete('/diary/{id}', 'DiaryController@destroy')->name('diary.destroy');
                 // {id}が変わるようにしたい。 // 日記が入ってくる。
-    Route::get('/diary/{id}/edit', 'DiaryController@edit')->name('diary.edit');
+    Route::get('/diary/{diary}/edit', 'DiaryController@edit')->name('diary.edit');
                 // 今書いたものはなんなんだろう？
     Route::put('/diary/{id}/update', 'DiaryController@update')->name('diary.update');
                 // putはリソースの更新。

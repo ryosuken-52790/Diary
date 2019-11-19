@@ -23,21 +23,24 @@
       <p>{{$diary->created_at}}</p>
 
 
+    {{-- Auth::check(): ログインしていたらtrue, 他はfalse --}}
+    {{-- 編集の部分をifのAuth::checkで囲めば、 --}}
+    @if(Auth::check() && $diary->user_id == Auth::user()->id)
+        <a href="{{ route('diary.edit',['id' => $diary->id ]) }}" class="btn btn-success">編集</a>
+        {{-- 編集ボタンを作る --}}
+        {{-- idを埋めなきゃいけない
+        , で繋いでidの場所を指定。 --}}
 
-    <a href="{{ route('diary.edit',['id' => $diary->id ]) }}" class="btn btn-success">編集</a>
-      {{-- 編集ボタンを作る --}}
-      {{-- idを埋めなきゃいけない
-      , で繋いでidの場所を指定。 --}}
 
-
-
-      {{-- 下は削除ボタンをつくってる --}}
-      <form action="{{ route('diary.destroy', ['id' => $diary->id ]) }}" method="POST" class="d-inline">
-      <!-- $diary->idを入れたことで検証のとこにDBのidが表示される。 -->
-      @csrf
-      @method('delete')
-        <button class="btn btn-danger">削除</button>
-      </form>
+        {{-- 下は削除ボタンをつくってる --}}
+        <form action="{{ route('diary.destroy', ['id' => $diary->id ]) }}" method="POST" class="d-inline">
+        <!-- $diary->idを入れたことで検証のとこにDBのidが表示される。 -->
+        @csrf
+        @method('delete')
+          <button class="btn btn-danger">削除</button>
+        </form>
+    @endif
+    
 
 
     </div>
