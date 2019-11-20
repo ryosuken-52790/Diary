@@ -42,6 +42,12 @@
     @endif
     
 
+      <div class="mt-3 ml-3">
+        <i class="far fa-heart fa-lg text-danger js-like"></i>
+      <input type="hidden" class="diary-id" value="{{ $diary->id }}">
+        <span class="js-like-num">200</span>
+      </div>
+
 
     </div>
     @endforeach

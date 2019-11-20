@@ -170,4 +170,17 @@ class DiaryController extends Controller
 
 
     }
+
+    // いいねが押された時
+    public function like()
+    {
+
+    }
+
+
+    // いいね解除が押された時の処理
+    public function dislike()
+    {
+
+    }
 }

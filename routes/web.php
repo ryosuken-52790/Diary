@@ -42,4 +42,8 @@ Route::group(['middleware' => ['auth']], function (){
                 // いくつかあるHTTPなんちゃらw
 
 
+    Route::post('/diary/{id}/like', 'DiaryController@like')->name('diary.like');
+    Route::post('/diary/{id}/dislike', 'DiaryController@dislike')->name('diary.dislike');
+
+
 });
