@@ -42,6 +42,28 @@
     @endif
     
 
+      <div class="mt-3 ml-3">
+
+          @if (Auth::check() && $diary->likes->contains(function ($user) {
+            return $user->id === Auth::user()->id;
+          }))
+              {{-- ログインしている、かつ、この日記にいいねしている場合 --}}
+              <i class="fas fa-heart fa-lg text-danger js-dislike"></i>
+          @else
+              {{-- いいねしていない場合 --}}
+              <i class="far fa-heart fa-lg text-danger js-like"></i>
+          @endif
+          {{-- この構文は、auth::checkでログインを確認して --}}
+          {{-- diaryのlikesを取ってきますよ。 --}}
+          {{-- いいねをしたユーザーとログインした人が一致しているか --}}
+          {{-- Aなら、C。BならDで表示、みたいな。 --}}
+
+
+
+        <input type="hidden" class="diary-id" value="{{ $diary->id }}">
+      <span class="js-like-num">{{ $diary->likes->count() }}</span>
+      </div>
+
 
     </div>
     @endforeach
