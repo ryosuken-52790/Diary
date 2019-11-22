@@ -54,7 +54,13 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            // 画像の種類と大きさを設定。
+            // 詳しくは公式をチェック
+            // 2048は画像サイズ。
         ]);
+        // ここが勝手にエラー表示を出してくれている。
+        // 〇〇は必須入力だよ！
     }
 
     /**
