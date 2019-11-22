@@ -27,7 +27,15 @@ class DiaryController extends Controller
         // diariesテーブルのデータを全件取得
         // 取得した結果を画面で確認
 
-        $diaries = Diary::all();
+        // $diaries = Diary::all();
+        // これだと日記の投稿のみを取ってくる。
+
+
+
+        $diaries = Diary::with('likes')->orderBy('id', 'desc')->get();
+
+
+
         // diariesのすべてを勝手に取ってきてくれる
         // dd($diaries);
         // dd():var_dumpとdieが同時に実行されてる
@@ -172,15 +180,38 @@ class DiaryController extends Controller
     }
 
     // いいねが押された時
-    public function like()
+    // このIDはweb.phpのルートから来てる。
+    public function like(int $id)
     {
+        // いいねされた日記の取得
+        $diary = Diary::find($id);
+
+        // attach : 多対多のデータを登録するメソッド
+        // 今回のlikesのデータをDBに登録させてる。
+        $diary->likes()->attach(Auth::user()->id);
+
+        // 通信が成功したことを返す
+        return response()->json(['success' => 'いいね完了！']);
 
     }
 
 
     // いいね解除が押された時の処理
-    public function dislike()
+    public function dislike(int $id)
     {
+        // いいね解除された日記の取得
+        $diary = Diary::find($id);
+
+        // detach : 多対多のデータを削除するメソッド
+        $diary->likes()->detach(Auth::user()->id);
+
+        // 通信が成功したことを返す
+        return response()->json(['success' => 'いいね解除完了！']);
 
     }
 }
+
+
+
+// memo
+// Authorized... は、権利。つまり、ログインをしろと
